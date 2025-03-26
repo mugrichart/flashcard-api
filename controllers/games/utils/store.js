@@ -14,6 +14,7 @@ class Player {
         this.playerID = playerID;
         this.playerScore = 0;
         this.playerRank = 0;
+        this.isSpeaking = false;
         this.playerName = playerName || "anonymous"
         this.playerAvatar = avatar || Player.availableAvatars.pop() || avatars[0]
     }
@@ -29,6 +30,7 @@ class Game {
         this.creator = ""
         this.players = []
         this.words = words
+        this.script = 0
         this.player_count = this.players.length
         this.state = {
             status: "waiting"

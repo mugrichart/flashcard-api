@@ -1,4 +1,5 @@
 const { gameBroadcast } = require("../../controllers/games/utils/utils")
+require('dotenv').config()
 
 class Router {
     constructor ({ method, payload, games, players, Player, Game, connections, ws }) {
@@ -12,12 +13,15 @@ class Router {
         this.ws = ws
     }
     route = (route, callback) => {
-        if (this.method === route) return callback({
-            method: this.method, payload: this.payload, 
-            games: this.games, players: this.players, 
-            Player: this.Player, Game: this.Game, 
-            connections: this.connections, ws: this.ws
-        })
+        if (this.method === route) {
+            if (process.env.ENV === "DEV") console.log("===== METHOD: ", this.method)
+            return callback({
+                method: this.method, payload: this.payload, 
+                games: this.games, players: this.players, 
+                Player: this.Player, Game: this.Game, 
+                connections: this.connections, ws: this.ws
+            })
+        }
     }
 }
 

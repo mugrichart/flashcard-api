@@ -1,5 +1,6 @@
 const { createStoryHandler } = require("../../deck")
 const { gameBroadcast } = require("../utils/utils")
+const { switchActivity: switchLine } = require("../chat/chat")
 
 const titleAndSummary = ({ games, ws, payload, connections}) => {
     console.log("....coming", payload)
@@ -57,7 +58,7 @@ const votingBestSentence = ({ games, players, ws, payload, connections}) => {
 
 const switchActivity = async ({ games, ws, payload, connections}) => {
     const { gameID, playerID, activity } = payload;
-    console.log("activity: ", activity, playerID)
+    console.log("activity: ", activity, playerID, gameID)
     const gameToJoin = games[gameID]
     if (!gameToJoin) return ws.send(JSON.stringify({method:"playing-update", payload: { status: 404, message: 'Game not found' }}))
     
@@ -72,6 +73,7 @@ const switchActivity = async ({ games, ws, payload, connections}) => {
         console.log(createdStory)
         return gameBroadcast(gameToJoin, "switch-activity", connections, {activity: "", story: createdStory})
     }
+    else if (activity === "next-line") return switchLine({games, ws, payload, connections})
     gameBroadcast(gameToJoin, "switch-activity", connections, {activity})
 }
 

@@ -12,6 +12,10 @@ const {
     switchActivity
 } = require("./story/story")
 
+const {
+    shareSignal
+} = require("./chat/chat")
+
 const Router = require("../../utils/game/router")
 
 const { Game, Player, games, players, connections } = require("./utils/store")
@@ -22,6 +26,7 @@ wss.on("connection", (ws) => {
     ws.on("message", async(message) => {
         const response = JSON.parse(message)
         const { method, payload } = response
+        
         const router = new Router({ method, payload, games, players, Player, Game, connections, ws })
 
         router.route("create", createGame)
@@ -34,7 +39,10 @@ wss.on("connection", (ws) => {
         router.route("add-new-sentence", addNewSentence)
         router.route("voting-best-sentence", votingBestSentence)
         router.route("switch-activity", switchActivity)
-        router.route("disconnect", () => null) // !Todo  Handling this later. removing the player when disconnected
+
+        router.route("signal", shareSignal)
+
+        router.route("disconnect", () => console.log("requesting to disconnect")) // !Todo  Handling this later. removing the player when disconnected
 
         // switch (method) {
         //     case "create": createGame({Game, Player, games, players, ws, connections, payload})

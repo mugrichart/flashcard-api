@@ -155,10 +155,63 @@ Input:
     ${paragraphs.map((paragraph, index) => `paragraph_${index}: ${paragraph}\n`) }
 `
 
+const fullScriptPrompt = (title, summary, words, players) => `
+I am creating an English learning platform, and this particular feature consists of vocabulary mastering using role playing,
+and your task is to generate a fun script to keep the learners engaged and excited to master the vocabulary
+
+So:
+1. Using this list of words (${words}), create a script that contains, and it's the players' job to use these words inside.
+2.  title:  ${title || "Generate a title for the story of the script"}
+    summary: ${summary || "Generate a summary for the story of the script"}
+    -> Use both this title and the summary to guide you in the script generation
+3. Each item of the script should indicate whether it's actor line or a scene cue or indication given by a narrator (which means this won't be spoken by an actor)
+4.  Use these player names. Players may sometimes reference each other, so use these names (once in a while you can be cheezy and nickname them using their actual names). The names are also used as keys (lowercase) for each actor line to know who's speaking the line
+    Players: ${players.map(player => player.playerName)}
+    Key players: ${players.filter(player => player.isKeyPlayer).map(player => player.playerName)}
+    -> Only key players will have lines that contain the words (because is practice is basically tailored towards them since their are learning. The rest are just supporting).
+5.  Since this is for the students to practice, the words they are practicing should be not be used anywhere (title, summary).
+    When it comes to the script, for each line that contains one of the words, provide a rephrased fied, where the line is rephrased around the area where the word is used
+    The words: ${words}
+    -> No line can use more than one of the words!
+6. The output is strictly json
+
+7. Typical output:
+{
+    title: The title of the story,
+    summary: a summary of the story,
+    words: random, potential, misery
+    script: [
+        {
+            type: line, // or narration if it is a narration
+            actor: jayce or null if it's a narration,
+            line: Rodrigue, do you know how crazy it is for us to be gathered all here today,
+            // notice how there is no rephrased field since this is a supporting character
+        },
+        {
+            type: narration,
+            actor: null,
+            line: Rodrigue barely looks at Jayce, sips and then checks his watch
+        }
+        {
+            type: line,
+            actor: mugisha,
+            line: Come on Rod. Be nice. He's had his own share of misery.
+            repharased: Come on Rod. Be nice. He's not had it easy lately either.
+            // notice how there is rephrased field because this is a key player / student
+        }
+    ]
+}
+}
+`
+const fullScriptSystemMsg = `
+ You are an amazing script writer for movies and cartoons. You write fun and engaging scripts for actors. And today, you are tasked to create a script for English learners to practice their vocabulary using role playing.
+`
+
 module.exports = {
     wordDefinitionPromptConstruct, wordFamilyGenerationPromptConstruct, 
     fullStoryPrompt, chunkStoryPrompt,
     wordFamilySystemMsg, wordDefinitionSystemMsg,
     chunkStorySystemMsg, fullStorySystemMsg,
-    blanksPrompt, quizPrompt
+    blanksPrompt, quizPrompt,
+    fullScriptPrompt, fullScriptSystemMsg
 }
