@@ -207,7 +207,7 @@ const fullScriptSystemMsg = `
  You are an amazing script writer for movies and cartoons. You write fun and engaging scripts for actors. And today, you are tasked to create a script for English learners to practice their vocabulary using role playing.
 `
 
-module.exports = {
+export {
     wordDefinitionPromptConstruct, wordFamilyGenerationPromptConstruct, 
     fullStoryPrompt, chunkStoryPrompt,
     wordFamilySystemMsg, wordDefinitionSystemMsg,

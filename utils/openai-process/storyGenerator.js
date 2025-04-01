@@ -1,15 +1,15 @@
 
-const openaiRequest = require('./openaiRequest')
+import openaiRequest from './openaiRequest.js'
 
-const {fullStoryPrompt, chunkStoryPrompt,
+import {fullStoryPrompt, chunkStoryPrompt,
         fullStorySystemMsg, chunkStorySystemMsg
-} = require('../openaiHelper')
+} from '../openaiHelper.js'
 
 const fullStoryGen = async (title, summary, words) => {
     try {
         const prompt = fullStoryPrompt(title, summary, words)
         const story = await openaiRequest("gpt-4o", fullStorySystemMsg, prompt)
-        console.log(story)
+        //console.log(story)
         return JSON.parse(story)
     } catch (error) {
         throw new Error(error.message)
@@ -20,14 +20,14 @@ const aiCoEditor = async (title, summary, words, currentStory) => {
     try {
         const prompt = chunkStoryPrompt(title, summary, words, currentStory);
         const halfStoryObj = await openaiRequest("gpt-4o", chunkStoryPrompt, prompt)
-        console.log(halfStoryObj)
+        //console.log(halfStoryObj)
         return JSON.parse(halfStoryObj)
     } catch (error) {
         throw new Error(error.message)
     }
 }
 
-module.exports = {
+export {
     fullStoryGen,
     aiCoEditor
 }

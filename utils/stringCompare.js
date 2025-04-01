@@ -28,6 +28,6 @@ const findSimilarityInExamples = (inputExampleSplitWordsList, outputWordExample)
     return similarityCount
 }
 
-module.exports = {
-    matchingInputWordToProbableOuput: findMostLikelyWord
+export {
+    findMostLikelyWord as matchingInputWordToProbableOuput
 }

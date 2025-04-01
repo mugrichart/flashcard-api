@@ -1,5 +1,5 @@
 
-const mongoose = require('mongoose')
+import mongoose from "mongoose"
 
 const StorySchema = mongoose.Schema({
     leadAuthor: {
@@ -16,7 +16,7 @@ const StorySchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Deck' 
     },
-    story: [
+    details: [
         {
             sentence: String,
             blanked: String,
@@ -26,4 +26,4 @@ const StorySchema = mongoose.Schema({
     words: [String]
 })
 
-module.exports = mongoose.model('Story', StorySchema);
+export default mongoose.model('Story', StorySchema);

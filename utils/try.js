@@ -1,7 +1,7 @@
 
 const {
     fullScriptGen
-} = require("./openai-process/actingScriptGenerator")
+}from "./openai-process/actingScriptGenerator")
 
 
 async function runner () {
@@ -25,7 +25,7 @@ async function runner () {
         ]
     )
 
-    console.log(script)
+    //console.log(script)
 }
 
 runner()

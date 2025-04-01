@@ -1,9 +1,9 @@
 
-const { blanksGen } = require("../../utils/openai-process/extension/blanksGen")
-const { quizGen } = require("../../utils/openai-process/extension/quizGen")
+import { blanksGen } from "../../utils/openai-process/extension/blanksGen.js"
+import { quizGen } from "../../utils/openai-process/extension/quizGen.js"
 
-const ArticleBlanks = require("../../models/extension/articleBlanks");
-const ArticleQuiz = require("../../models/extension/articleQuiz");
+import ArticleBlanks from "../../models/extension/articleBlanks.js";
+import ArticleQuiz from "../../models/extension/articleQuiz.js";
 
 const getBlanks = async (req, res) => {
     try {
@@ -18,7 +18,7 @@ const getBlanks = async (req, res) => {
 }
 
 
-module.exports = {
+export {
     getBlanks
 }
 
@@ -29,7 +29,9 @@ const fetchArticleBlanks = async (href, paragraphs) => {
         const blanks = removingInvalids(words, paragraphs);
         ArticleBlanks.create({
             href, blanks
-        }).catch(console.log)
+        }).catch(
+            console.log
+        )
 
         return blanks
     

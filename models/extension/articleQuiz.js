@@ -1,5 +1,5 @@
 
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const ParagraphSchema = new Schema({
@@ -21,4 +21,4 @@ const ArticleQuizSchema = new Schema({
     summary: ParagraphSchema
 })
 
-module.exports = mongoose.model("ArticleQuiz", ArticleQuizSchema)
+export default mongoose.model("ArticleQuiz", ArticleQuizSchema)

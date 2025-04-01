@@ -1,10 +1,11 @@
-require('dotenv').config()
+import dotenv from "dotenv"
+dotenv.config()
 
-const {wordDefinitionPromptConstruct, wordFamilyGenerationPromptConstruct,
+import {wordDefinitionPromptConstruct, wordFamilyGenerationPromptConstruct,
         wordFamilySystemMsg, wordDefinitionSystemMsg,
-} = require('../openaiHelper')
+} from '../openaiHelper.js'
 
-const openaiRequest = require('./openaiRequest')
+import openaiRequest from './openaiRequest.js'
 
 const wordDefiner = async (words, regularOrTemporaryDeck) => {
     const parent = async (wordObject, regularOrTemporaryDeck) => {    
@@ -16,7 +17,7 @@ const wordDefiner = async (words, regularOrTemporaryDeck) => {
             const prompt = wordDefinitionPromptConstruct(JSON.stringify(wordObject))
             const openaiRes = await openaiRequest("gpt-3.5-turbo", wordDefinitionSystemMsg, prompt)
             const { definitions } = JSON.parse(openaiRes)
-            // console.log('--------- word definer result: \n', definitions.map(obj => ({...obj, 'related words': related_words } )))
+            // //console.log('--------- word definer result: \n', definitions.map(obj => ({...obj, 'related words': related_words } )))
             return definitions.map(defObj => {
                 const blankWords = defObj["blanked example"].split(" ");
                 const acceptableNumOfBlanks = 1
@@ -29,7 +30,7 @@ const wordDefiner = async (words, regularOrTemporaryDeck) => {
         for (let i = 0; i < 3; i++) {
             try { return await reusable()} 
             catch (error) {
-                console.log('retrying: ', `${i}th try with error: ${error.message}`)
+                //console.log('retrying: ', `${i}th try with error: ${error.message}`)
                 return await reusable()
             }
         }
@@ -46,11 +47,11 @@ const wordFamilyGenerator = async (words) => {
     try {
         const prompt = wordFamilyGenerationPromptConstruct(words)
         const openaiRes = await openaiRequest("gpt-4o", wordFamilySystemMsg, prompt)
-        console.log(openaiRes)
+        //console.log(openaiRes)
         return JSON.parse(openaiRes)
     }
     catch (error) {
-        console.log(error.message)
+        //console.log(error.message)
         throw new Error("\n-----error generating the list of variations: ", error)
     }
 }
@@ -71,16 +72,16 @@ const wordDefinition = async (words, regularOrTemporaryDeck) => {
         let processStartTime = processTimeLogger()
         const response = await wordFamilyGenerator(words)
         const wordFamilies = response["word families"]
-        // console.log('words families', wordFamilies.length)
-        console.log('-----words families: ', wordFamilies)
+        // //console.log('words families', wordFamilies.length)
+        //console.log('-----words families: ', wordFamilies)
         processTimeLogger(processStartTime); 
         processStartTime = processTimeLogger()
-        console.log('.....now proper openai starts')
+        //console.log('.....now proper openai starts')
         const result = await wordDefiner(wordFamilies, regularOrTemporaryDeck)
         processTimeLogger(processStartTime)
         return result
     } catch (error) {
-        console.log(error.message)
+        //console.log(error.message)
         throw new Error(`\n-----Error with word definition process: ${error}`)
         // return {msg: `Error processing the words: ${error}`, words: generateData}
     }
@@ -88,5 +89,5 @@ const wordDefinition = async (words, regularOrTemporaryDeck) => {
 
 
 
-module.exports = wordDefinition
+export default wordDefinition
 

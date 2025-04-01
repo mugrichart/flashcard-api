@@ -1,5 +1,5 @@
 
-const mongoose = require('mongoose')
+import mongoose from "mongoose"
 
 const wordMastery = new mongoose.Schema({
     wordId: {
@@ -61,7 +61,7 @@ const masteryUpdation = async (wordMasteries) => {
         return await WordMastery.insertMany(wordMasteries, { ordered: false }); // ordered: false allows continuing on duplicates
     } catch (error) {
         if (error.code === 11000) {
-            console.log("Duplicate wordId found and skipped.");
+            //console.log("Duplicate wordId found and skipped.");
         } else {
             throw error;
         }
@@ -83,7 +83,7 @@ const newLearning = async (deckId, user, wordIds) => {
 
     let wordMasteries = wordIds.slice(0, 10)?.map(wordId => ({wordId, level: 0}))
     wordMasteries = await masteryUpdation(wordMasteries)
-    // console.log(createdLearning, wordMasteries, '............')
+    // //console.log(createdLearning, wordMasteries, '............')
 
     return {createdLearning: createdLearning.toObject(), wordMasteries}
 }
@@ -134,7 +134,7 @@ const patchLearningDeck = async (userId, updateData) => {
     return { updatedLearning, newWordMasteries: wordMasteries } ;
 };
 
-module.exports = {
+export {
     WordMastery,
     Learning,
     newLearning,

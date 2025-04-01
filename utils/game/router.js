@@ -1,8 +1,10 @@
-const { gameBroadcast } = require("../../controllers/games/utils/utils")
-require('dotenv').config()
+
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 class Router {
-    constructor ({ method, payload, games, players, Player, Game, connections, ws }) {
+    constructor ({ method, payload, games, players, Player, Game, connections, socket, io }) {
         this.method = method
         this.payload = payload
         this.games = games
@@ -10,19 +12,22 @@ class Router {
         this.Player = Player
         this.Game = Game
         this.connections = connections
-        this.ws = ws
+        this.io = io
+        this.socket = socket
     }
     route = (route, callback) => {
         if (this.method === route) {
-            if (process.env.ENV === "DEV") console.log("===== METHOD: ", this.method)
+            if (process.env.ENV === "DEV") //console.log("===== METHOD: ", this.method)
             return callback({
                 method: this.method, payload: this.payload, 
                 games: this.games, players: this.players, 
                 Player: this.Player, Game: this.Game, 
-                connections: this.connections, ws: this.ws
+                connections: this.connections, 
+                socket: this.socket,
+                io: this.io
             })
         }
     }
 }
 
-module.exports = Router
+export Router

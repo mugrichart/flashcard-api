@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const AppSchema = new mongoose.Schema({
     max_wishes: { type: Number, default: 1 },
@@ -21,4 +21,4 @@ const AppSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('App', AppSchema);
+export default mongoose.model('App', AppSchema);

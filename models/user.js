@@ -1,5 +1,6 @@
 
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
+import mongooseUniqueValidator from "mongoose-unique-validator";
 
 const UserSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
@@ -8,8 +9,8 @@ const UserSchema = new mongoose.Schema({
 });
 
 // Plugin for custom error messages on uniqueness violations
-UserSchema.plugin(require('mongoose-unique-validator'), {
+UserSchema.plugin(mongooseUniqueValidator, {
     message: '{PATH} already in use.'
 });
 
-module.exports = mongoose.model('User', UserSchema);
+export default mongoose.model('User', UserSchema);

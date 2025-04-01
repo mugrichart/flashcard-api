@@ -1,20 +1,20 @@
 
-const openaiRequest = require('../openaiRequest')
+import openaiRequest from '../openaiRequest.js'
 
-const {
+import {
     quizPrompt
-} = require('../../openaiHelper')
+} from '../../openaiHelper.js'
 
 
 const quizGen = async ({paragraphs, title}) => {
     try {
         const regrouped = regroupParagraphs(paragraphs)
         const prompt = quizPrompt(Object.values(regrouped), title);
-        // console.log(prompt)
+        // //console.log(prompt)
         const quiz = await openaiRequest("gpt-4o", 
             "You are teacher evaluating students' comprehension on articles"
             , prompt)
-        console.log(quiz)
+        //console.log(quiz)
         const parsedQuiz = JSON.parse(quiz)
         const parQuiz = Object.values(parsedQuiz['individual'])
         const responseQuiz = {
@@ -22,7 +22,7 @@ const quizGen = async ({paragraphs, title}) => {
             "summary" : parsedQuiz["summary"]
         }
 
-        console.log(responseQuiz)
+        //console.log(responseQuiz)
         return responseQuiz
     } catch (error) {
         throw new Error(error.message)
@@ -43,6 +43,6 @@ const regroupParagraphs = (paragraphs) => {
     return regrouped
 }
 
-module.exports = {
+export {
     quizGen
 }

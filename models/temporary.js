@@ -1,5 +1,5 @@
 
-const mongoose = require('mongoose')
+import mongoose from "mongoose"
 
 const TemporarySchema = mongoose.Schema({
     creator: {
@@ -20,4 +20,4 @@ const TemporarySchema = mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('Temporary', TemporarySchema);
+export default mongoose.model('Temporary', TemporarySchema);

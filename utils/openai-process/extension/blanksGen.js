@@ -1,15 +1,15 @@
 
-const openaiRequest = require('../openaiRequest')
+import openaiRequest from '../openaiRequest.js'
 
-const {
+import {
     blanksPrompt
-} = require('../../openaiHelper')
+} from '../../openaiHelper.js'
 
 
 const blanksGen = async (paragraphs) => {
     try {
         const prompt = blanksPrompt(paragraphs);
-        // console.log(prompt)
+        // //console.log(prompt)
         const words = await openaiRequest("gpt-4o", 
             "You are a Language teaching assistant helping students practice vocabulary on articles"
             , prompt)
@@ -21,6 +21,6 @@ const blanksGen = async (paragraphs) => {
     }
 }
 
-module.exports = {
+export {
     blanksGen
 }

@@ -1,5 +1,5 @@
 
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 
@@ -19,4 +19,4 @@ const ArticleBlanksSchema = mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model("ArticleBlanks", ArticleBlanksSchema)
+export default mongoose.model("ArticleBlanks", ArticleBlanksSchema)

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const wordSchema = new mongoose.Schema({
     language: String,
@@ -41,4 +41,4 @@ function getWordModel(language) {
     return mongoose.model('Word', wordSchema, collectionName);
 }
 
-module.exports = getWordModel;
+export default getWordModel;
