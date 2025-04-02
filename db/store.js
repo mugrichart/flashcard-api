@@ -9,8 +9,13 @@ const avatars = [
 
 const games = new Map()
 
+const ballotCenter = new Map()
+
+const gameScoreKeeper = new Map()
 
 export {
     games, 
-    avatars
+    avatars,
+    ballotCenter,
+    gameScoreKeeper
 }

@@ -1,5 +1,5 @@
 
-import { avatars } from "../../../controllers/game/utils/store.js";
+import { avatars } from "../../../db/store.js";
 
 class Participant {
     constructor ({ username, userID, avatar }) {

@@ -1,6 +1,6 @@
 
 import Participant from "./participant.js";
-import { avatars } from "../../../controllers/game/utils/store.js";
+import { avatars } from "../../../db/store.js";
 
 class Player extends Participant {
     constructor ({username, userID, avatar}) {

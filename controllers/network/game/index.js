@@ -1,6 +1,6 @@
 
 import GameFactory from "../../../factories/network/game.js";
-import { games } from "../../game/utils/store.js";
+import { games, ballotCenter, gameScoreKeeper } from "../../../db/store.js"
 import create from "./create.js"
 import join from "./join.js"
 import lobbyUpdate from "./lobby.js";
@@ -22,7 +22,7 @@ export default class GameHandle {
     }
 
     static inProgress (resources) {
-        inPorgressUpdate({ games, ...resources })
+        inPorgressUpdate({ games, ballotCenter, gameScoreKeeper, ...resources })
     }
 
     static postGame (resources) {

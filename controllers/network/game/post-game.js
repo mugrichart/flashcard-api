@@ -6,17 +6,19 @@ export default async({ games, socket, io, payload}) => {
     if (gameInfo.data?.step === "uploading") {
         console.log(gameInfo.data)
         const { title, summary, details, words } = gameInfo.data;
-        const createdStory = await createStoryHandler(
+        createStoryHandler(
             null, 
             { title, summary, details, leadAuthor: gameInfo.creator, 
             coAuthors: Object.keys(gameInfo.players).filter(playerID => playerID !== gameInfo.creator), words: words || []
             }
+        ).then(console.log)
+        .catch( e =>
+            console.log(e.message)
         )
-        console.log(createdStory)
 
         gameInfo.stories = gameInfo.stories || []
         gameInfo.data.step = "catalog"
-        gameInfo.stories.push(createdStory) 
+        gameInfo.stories.push(gameInfo.data) 
     }
     io.to(gameInfo.id).emit(socket.requestPath, {...gameInfo, source: null}) 
 }

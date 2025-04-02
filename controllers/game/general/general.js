@@ -1,4 +1,4 @@
-const { gameBroadcast }from "../utils/utils")
+import { gameBroadcast } from "../utils/utils"
 
 const create = ({ Game, games, players, io, socket, connections, payload }) => {
     const { userID, username, avatar, type, words } = payload
@@ -96,7 +96,7 @@ const playing = ({ games, players, socket, connections, payload}) => {
 
     const playersUpdate = gameToJoin.players.map(playerID => players[playerID])
     const allPlayed = playersUpdate.every(player => player.played === true)
-    allPlayed && //console.log('all played')
+    allPlayed && console.log('all played')
     if (!allPlayed) return
     
     playersUpdate.sort((playerA, playerB) => playerA.playerScore - playerB.playerScore).reverse()

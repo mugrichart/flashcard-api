@@ -19,8 +19,13 @@ export default ({ games, socket, io, payload}) => {
     socket.join(gameToJoin.id)
 
     console.log(io.sockets.adapter.rooms.get(gameToJoin.id)); 
+
+    const res = gameToJoin.type === "story" ? 
+                    { ...gameToJoin, data: {...gameToJoin.data.metadata, ...gameToJoin.data.state} } :
+                    gameToJoin
+    // console.log(res)
     
-    io.to(gameToJoin.id).emit("game/lobby", { ...gameToJoin, data: {...gameToJoin.data.metadata, ...gameToJoin.data.state} }) 
+    io.to(gameToJoin.id).emit("game/lobby", res ) 
 
     // optionally send game details to this individual as with 'join' method
 }
